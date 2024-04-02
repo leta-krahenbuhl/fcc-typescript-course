@@ -9,7 +9,15 @@ type Task = {
   isCompleted: boolean;
 };
 
-const tasks: Task[] = [];
+const tasks: Task[] = loadTasks();
+
+tasks.forEach((task) => renderTask(task));
+// tasks.forEach(renderTask);
+
+function loadTasks(): Task[] {
+  const storedTasks = localStorage.getItem("tasks");
+  return storedTasks ? JSON.parse(storedTasks) : [];
+}
 
 taskForm?.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -39,6 +47,18 @@ function addTask(task: Task): void {
 function renderTask(task: Task): void {
   const taskElement = document.createElement("li");
   taskElement.textContent = task.description;
+
+  //checkbox
+  const taskCheckbox = document.createElement("input");
+  taskCheckbox.type = "checkbox";
+  taskCheckbox.checked = task.isCompleted;
+  taskElement.appendChild(taskCheckbox);
+  // toggle checkbox
+  taskCheckbox.addEventListener("change", () => {
+    task.isCompleted = !task.isCompleted;
+    updateStorage();
+  });
+
   taskListElement?.appendChild(taskElement);
 }
 
