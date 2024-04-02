@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "moduleDetection": "force",
 
     /* Linting */
     "strict": true, //if set to false, you can create functions without typescript throwing an error if type of parameter is not defined ie set to any by default
